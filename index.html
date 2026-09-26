@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>О себе</title>
+  <link rel="stylesheet" href="style.css">
+
+  <!-- Внутренний блок стилей: оформление списков (маркеры и отступы) -->
+  <style>
+    ul {
+      list-style-type: square;
+      padding-left: 30px;
+    }
+    ol {
+      list-style-type: decimal;
+      padding-left: 30px;
+    }
+    li {
+      margin-bottom: 8px;
+      padding-left: 4px;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Заур Байрамов</h1>
+    <p>Дизайнер и визуализатор</p>
+  </header>
+
+  <div class="container">
+
+    <main>
+      <section>
+        <h2>Навыки</h2>
+        <ul>
+          <li>Работа с макетами в Figma</li>
+          <li>Понимание типографики</li>
+          <li>Цветовая теория</li>
+          <li>Работа с векторной графикой (Illustrator)</li>
+        </ul>
+      </section>
+
+      <!-- Секция с inline-стилем: фиксированная высота 300px -->
+      <section style="height: 300px;">
+        <h2>Проекты</h2>
+        <ol>
+          <li>Логотип для кофейни "Аромат"</li>
+          <li>Дизайн интерфейса мобильного приложения</li>
+          <li>Плакат для городского фестиваля</li>
+          <li>Редизайн сайта-портфолио</li>
+        </ol>
+      </section>
+    </main>
+
+    <aside>
+      <h2>Любимые технологии</h2>
+      <p>Figma, Adobe Illustrator, Photoshop</p>
+      <h2>Любимый стиль</h2>
+      <p>Минимализм</p>
+    </aside>
+
+  </div>
+
+  <div class="avatar-block">
+    <img src="avatar.jpg" alt="Фото профиля" width="200" height="200">
+  </div>
+
+  <section class="contact-form">
+    <h2>Связаться со мной</h2>
+    <form>
+      <input type="text" name="name" placeholder="Имя"><br>
+      <input type="email" name="email" placeholder="Email"><br>
+      <textarea name="message" placeholder="Сообщение"></textarea><br>
+      <button type="submit">Отправить</button>
+    </form>
+  </section>
+
+  <footer>
+    <p>&copy; 2026 Заур Байрамов</p>
+  </footer>
+
+</body>
+</html>

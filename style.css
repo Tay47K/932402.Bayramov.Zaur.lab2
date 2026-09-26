@@ -1,0 +1,127 @@
+:root {
+  --main-color: #FDEBF3;   /* пастельно-розовый */
+  --accent-color: #3A3A3A; /* тёмно-серый */
+}
+
+body {
+  font-family: Arial, sans-serif;
+  color: var(--accent-color);
+  margin: 0;
+  padding: 0;
+
+  /* Параллакс-фон */
+  background-image: url('https://images.unsplash.com/photo-1557682250-33bd709cbe85?w=1200');
+  background-attachment: fixed;
+  background-size: cover;
+  background-position: center;
+  background-color: var(--main-color);
+  transition: background-color 0.4s ease, background-position 0.6s ease;
+}
+
+/* Смещение фона при наведении на разные секции — эффект лёгкого параллакса */
+body:has(header:hover) {
+  background-position: center top;
+}
+body:has(main:hover) {
+  background-position: center center;
+}
+body:has(aside:hover) {
+  background-position: center bottom;
+}
+
+/* Затемнение фона страницы при фокусе на любом поле формы */
+body:has(input:focus, textarea:focus) {
+  background-color: #00000055;
+}
+
+header {
+  background-color: rgba(247, 201, 222, 0.9);
+  padding: 20px;
+  text-align: center;
+}
+
+header h1 {
+  margin: 0;
+  color: var(--accent-color);
+}
+
+.container {
+  display: flex;
+  gap: 20px;
+  padding: 20px;
+  background-color: rgba(255, 255, 255, 0.7);
+}
+
+main { flex: 3; }
+
+aside {
+  flex: 1;
+  background-color: rgba(250, 221, 235, 0.9);
+  padding: 15px;
+  border-radius: 8px;
+  height: fit-content;
+}
+
+section {
+  margin-bottom: 25px;
+}
+
+h2 {
+  color: #C2185B;
+  border-bottom: 2px solid #E85D9E;
+  display: inline-block;
+}
+
+.avatar-block {
+  text-align: center;
+  background-color: rgba(255, 255, 255, 0.6);
+  padding: 20px;
+}
+
+.avatar-block img {
+  border-radius: 50%;
+  border: 3px solid #E85D9E;
+}
+
+.contact-form {
+  max-width: 400px;
+  margin: 0 auto;
+  text-align: center;
+  background-color: rgba(255, 255, 255, 0.7);
+  padding: 20px;
+  border-radius: 8px;
+}
+
+.contact-form input,
+.contact-form textarea {
+  width: 90%;
+  padding: 8px;
+  margin: 6px 0;
+  border: 1px solid #E85D9E;
+  border-radius: 4px;
+}
+
+.contact-form input:focus,
+.contact-form textarea:focus {
+  outline: 2px solid var(--accent-color);
+}
+
+.contact-form button {
+  background-color: #E85D9E;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.contact-form button:hover {
+  background-color: var(--accent-color);
+}
+
+footer {
+  text-align: center;
+  background-color: rgba(247, 201, 222, 0.9);
+  padding: 10px;
+  margin-top: 20px;
+}
