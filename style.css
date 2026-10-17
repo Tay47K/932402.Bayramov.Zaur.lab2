@@ -35,9 +35,41 @@ body:has(input:focus, textarea:focus) {
 }
 
 header {
+  position: relative; /* точка отсчёта для absolute-навигации */
   background-color: rgba(247, 201, 222, 0.9);
   padding: 20px;
   text-align: center;
+}
+
+header nav {
+  position: absolute; /* навигация в правом верхнем углу шапки */
+  top: 15px;
+  right: 20px;
+}
+
+main, aside {
+  position: static; /* значение по умолчанию, задано явно */
+}
+
+/* Ссылки: все состояния */
+a {
+  color: #C2185B;
+  text-decoration: none;
+  margin-left: 12px;
+}
+a:visited {
+  color: #7B1FA2;
+}
+a:hover {
+  color: var(--accent-color);
+  text-decoration: underline;
+}
+a:focus {
+  outline: 2px solid var(--accent-color);
+  outline-offset: 2px;
+}
+a:active {
+  color: #E85D9E;
 }
 
 header h1 {
@@ -118,10 +150,39 @@ h2 {
 .contact-form button:hover {
   background-color: var(--accent-color);
 }
+.contact-form button:focus {
+  outline: 3px solid var(--accent-color);
+  outline-offset: 2px;
+}
+.contact-form button:active {
+  background-color: #C2185B;
+  transform: translateY(1px);
+}
 
 footer {
   text-align: center;
   background-color: rgba(247, 201, 222, 0.9);
   padding: 10px;
   margin-top: 20px;
+}
+
+/* Адаптивность */
+.container {
+  flex-wrap: wrap;
+}
+
+@media (max-width: 768px) {
+  .container {
+    flex-direction: column;
+  }
+  header nav {
+    position: static; /* на узких экранах навигация встаёт в поток */
+    margin-top: 10px;
+  }
+  a {
+    margin: 0 8px;
+  }
+  .contact-form {
+    max-width: 90%;
+  }
 }
