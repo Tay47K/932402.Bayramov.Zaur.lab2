@@ -1,188 +1,305 @@
+/* ============================================================
+   ЛР №2, вариант 14 — «Дизайнер и визуализатор»
+   Основной стиль (внешний файл)
+   ============================================================ */
+
+/* CSS-переменные: цвета и шрифты */
 :root {
-  --main-color: #FDEBF3;   /* пастельно-розовый */
-  --accent-color: #3A3A3A; /* тёмно-серый */
+  --color-primary: #F7D6E6;        /* основной — пастельно-розовый */
+  --color-primary-soft: #FDF2F7;
+  --color-primary-deep: #F2B9D4;
+  --color-accent: #33333A;         /* акцент — тёмно-серый */
+  --color-accent-soft: #55555E;
+  --color-pink-text: #8E0F45;      /* тёмно-розовый для текста (контраст >= 4.5:1) */
+  --color-surface: #FFFFFF;
+  --font-heading: 'Tenor Sans', 'Georgia', serif;
+  --font-body: 'Manrope', 'Verdana', sans-serif;
 }
 
+/* --- Базовые стили + параллакс-фон --- */
 body {
-  font-family: Arial, sans-serif;
-  color: var(--accent-color);
+  font-family: var(--font-body);
+  color: var(--color-accent);
   margin: 0;
   padding: 0;
-
-  /* Параллакс-фон */
-  background-image: url('https://images.unsplash.com/photo-1557682250-33bd709cbe85?w=1200');
+  /* Фоновое изображение + параллакс: фон «заморожен» при скролле */
+  background-color: var(--color-primary-soft);
+  background-image: url("bg.svg");
   background-attachment: fixed;
   background-size: cover;
-  background-position: center;
-  background-color: var(--main-color);
-  transition: background-color 0.4s ease, background-position 0.6s ease;
+  background-position: center 0;
+  transition: background-position 0.9s ease;
 }
 
-/* Смещение фона при наведении на разные секции — эффект лёгкого параллакса */
-body:has(header:hover) {
-  background-position: center top;
-}
-body:has(main:hover) {
-  background-position: center center;
-}
-body:has(aside:hover) {
-  background-position: center bottom;
-}
+/* Лёгкий параллакс: сдвиг background-position при наведении на разные секции */
+body:has(#skills:hover)      { background-position: center -140px; }
+body:has(#projects:hover)    { background-position: center -300px; }
+body:has(#positioning:hover) { background-position: center -460px; }
+body:has(aside:hover)        { background-position: center -220px; }
 
-/* Затемнение фона страницы при фокусе на любом поле формы */
-body:has(input:focus, textarea:focus) {
-  background-color: #00000055;
+/* Затемнение фона страницы при :focus на любом поле формы */
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background: rgba(35, 28, 34, 0.55);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.45s ease;
+  z-index: 40;
 }
+body:has(.contact-form :focus)::after { opacity: 1; }
 
+/* --- Шапка --- */
 header {
-  position: relative; /* точка отсчёта для absolute-навигации */
-  background-color: rgba(247, 201, 222, 0.9);
-  padding: 20px;
+  background-color: rgba(247, 201, 222, 0.88);
+  backdrop-filter: blur(8px);
+  padding: 28px 20px 24px;
   text-align: center;
+  border-bottom: 3px solid var(--color-primary-deep);
 }
-
-header nav {
-  position: absolute; /* навигация в правом верхнем углу шапки */
-  top: 15px;
-  right: 20px;
-}
-
-main, aside {
-  position: static; /* значение по умолчанию, задано явно */
-}
-
-/* Ссылки: все состояния */
-a {
-  color: #C2185B;
-  text-decoration: none;
-  margin-left: 12px;
-}
-a:visited {
-  color: #7B1FA2;
-}
-a:hover {
-  color: var(--accent-color);
-  text-decoration: underline;
-}
-a:focus {
-  outline: 2px solid var(--accent-color);
-  outline-offset: 2px;
-}
-a:active {
-  color: #E85D9E;
-}
-
 header h1 {
+  margin: 10px 0 4px;
+  font-family: var(--font-heading);
+  font-size: 2.6rem;
+  color: var(--color-accent);
+  letter-spacing: 1px;
+}
+.subtitle {
   margin: 0;
-  color: var(--accent-color);
+  font-size: 1.05rem;
+  color: var(--color-accent-soft);
+  text-transform: uppercase;
+  letter-spacing: 3px;
 }
 
+/* Навигация и псевдоклассы ссылок */
+.top-nav a {
+  color: var(--color-accent);
+  text-decoration: none;
+  font-weight: 600;
+  margin: 0 14px;
+  padding: 4px 10px;
+  border-radius: 20px;
+  transition: background-color 0.25s ease, color 0.25s ease, transform 0.2s ease;
+}
+.top-nav a:visited { color: var(--color-pink-text); }
+.top-nav a:hover {
+  background-color: var(--color-accent);
+  color: #FFFFFF;
+  transform: translateY(-2px);
+}
+.top-nav a:active { transform: translateY(0) scale(0.96); }
+.top-nav a:focus-visible {
+  outline: 3px dashed var(--color-pink-text);
+  outline-offset: 3px;
+}
+
+/* --- Сетка --- */
 .container {
   display: flex;
-  gap: 20px;
-  padding: 20px;
-  background-color: rgba(255, 255, 255, 0.7);
+  flex-wrap: wrap;
+  gap: 24px;
+  padding: 28px;
+  max-width: 1100px;
+  margin: 0 auto;
 }
-
-main { flex: 3; }
-
+main { flex: 3; min-width: 280px; }
 aside {
   flex: 1;
-  background-color: rgba(250, 221, 235, 0.9);
-  padding: 15px;
-  border-radius: 8px;
+  min-width: 220px;
+  background-color: rgba(250, 221, 235, 0.92);
+  padding: 20px;
+  border-radius: 12px;
+  border: 1px solid var(--color-primary-deep);
   height: fit-content;
+  box-shadow: 0 8px 24px rgba(51, 51, 58, 0.08);
 }
 
+/* --- Секции --- */
 section {
-  margin-bottom: 25px;
+  position: relative; /* relative-контекст для абсолютных детей */
+  margin-bottom: 28px;
+  background-color: rgba(255, 255, 255, 0.82);
+  backdrop-filter: blur(6px);
+  padding: 22px 24px;
+  border-radius: 12px;
+  border: 1px solid var(--color-primary-deep);
+  box-shadow: 0 6px 20px rgba(51, 51, 58, 0.06);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+section:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 14px 32px rgba(51, 51, 58, 0.14);
 }
 
 h2 {
-  color: #C2185B;
-  border-bottom: 2px solid #E85D9E;
+  font-family: var(--font-heading);
+  color: var(--color-pink-text);
+  border-bottom: 2px solid var(--color-primary-deep);
   display: inline-block;
+  padding-bottom: 4px;
+  margin-top: 0;
 }
 
-.avatar-block {
-  text-align: center;
-  background-color: rgba(255, 255, 255, 0.6);
-  padding: 20px;
+/* Абсолютно позиционированный бейдж */
+.badge {
+  position: absolute;
+  top: -12px;
+  right: 18px;
+  background-color: var(--color-accent);
+  color: #FFFFFF;
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  padding: 6px 14px;
+  border-radius: 20px;
+  box-shadow: 0 4px 12px rgba(51, 51, 58, 0.3);
 }
 
+/* --- Демо позиционирования (static / relative / absolute) --- */
+#positioning { overflow: hidden; }
+.pos-static,
+.pos-relative,
+.pos-absolute {
+  padding: 10px 14px;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  margin-top: 10px;
+}
+.pos-static {
+  position: static; /* явно заданный static */
+  background-color: var(--color-primary);
+  border: 1px solid var(--color-primary-deep);
+}
+.pos-relative {
+  position: relative;
+  top: 12px;
+  left: 20px;
+  background-color: #EFEFf2;
+  border: 1px solid var(--color-accent-soft);
+}
+.pos-absolute {
+  position: absolute;
+  right: 16px;
+  bottom: 14px;
+  background-color: var(--color-accent);
+  color: #FFFFFF;
+  max-width: 240px;
+}
+
+/* --- Аватар --- */
+.avatar-block { text-align: center; margin-bottom: 28px; }
 .avatar-block img {
   border-radius: 50%;
-  border: 3px solid #E85D9E;
+  border: 4px solid var(--color-accent);
+  box-shadow: 0 10px 30px rgba(51, 51, 58, 0.25);
+  transition: transform 0.35s ease, border-color 0.35s ease;
+}
+.avatar-block img:hover {
+  transform: scale(1.05) rotate(2deg);
+  border-color: var(--color-pink-text);
+}
+.avatar-caption {
+  color: var(--color-accent-soft);
+  font-size: 0.85rem;
+  letter-spacing: 1px;
 }
 
+/* --- Форма (поднята над затемняющим слоем) --- */
 .contact-form {
-  max-width: 400px;
-  margin: 0 auto;
+  position: relative;
+  z-index: 50;
+  max-width: 440px;
+  margin: 0 auto 40px;
   text-align: center;
-  background-color: rgba(255, 255, 255, 0.7);
-  padding: 20px;
-  border-radius: 8px;
 }
-
 .contact-form input,
 .contact-form textarea {
   width: 90%;
-  padding: 8px;
-  margin: 6px 0;
-  border: 1px solid #E85D9E;
-  border-radius: 4px;
+  padding: 10px 12px;
+  margin: 8px 0;
+  border: 2px solid var(--color-primary-deep);
+  border-radius: 8px;
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  background-color: var(--color-surface);
+  color: var(--color-accent);
+  transition: border-color 0.25s ease, box-shadow 0.25s ease;
 }
-
+/* :focus на полях формы */
 .contact-form input:focus,
 .contact-form textarea:focus {
-  outline: 2px solid var(--accent-color);
+  outline: none;
+  border-color: var(--color-accent);
+  box-shadow: 0 0 0 4px rgba(51, 51, 58, 0.18);
 }
+.contact-form textarea { min-height: 90px; resize: vertical; }
 
 .contact-form button {
-  background-color: #E85D9E;
-  color: white;
+  background-color: var(--color-accent);
+  color: #FFFFFF;
   border: none;
-  padding: 10px 20px;
-  border-radius: 4px;
+  padding: 12px 32px;
+  border-radius: 30px;
+  font-family: var(--font-body);
+  font-weight: 800;
+  font-size: 0.95rem;
+  letter-spacing: 1px;
   cursor: pointer;
+  transition: background-color 0.25s ease, transform 0.15s ease, box-shadow 0.25s ease;
 }
-
 .contact-form button:hover {
-  background-color: var(--accent-color);
+  background-color: var(--color-pink-text);
+  box-shadow: 0 8px 20px rgba(142, 15, 69, 0.35);
+  transform: translateY(-2px);
 }
-.contact-form button:focus {
-  outline: 3px solid var(--accent-color);
-  outline-offset: 2px;
-}
-.contact-form button:active {
-  background-color: #C2185B;
-  transform: translateY(1px);
+.contact-form button:active { transform: translateY(0) scale(0.96); }
+.contact-form button:focus-visible {
+  outline: 3px dashed var(--color-pink-text);
+  outline-offset: 3px;
 }
 
+/* --- Ссылки в aside: :visited / :hover / :active --- */
+aside a {
+  color: var(--color-pink-text);
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  transition: color 0.25s ease, letter-spacing 0.25s ease;
+}
+aside a:visited { color: var(--color-accent-soft); }
+aside a:hover { color: var(--color-accent); letter-spacing: 0.5px; }
+aside a:active { color: #000000; }
+
+/* --- Подвал --- */
 footer {
   text-align: center;
   background-color: rgba(247, 201, 222, 0.9);
-  padding: 10px;
-  margin-top: 20px;
+  backdrop-filter: blur(8px);
+  padding: 14px;
+  border-top: 3px solid var(--color-primary-deep);
+  color: var(--color-accent);
+  font-size: 0.9rem;
 }
 
-/* Адаптивность */
-.container {
-  flex-wrap: wrap;
+/* --- Появление при загрузке --- */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(18px); }
+  to   { opacity: 1; transform: translateY(0); }
 }
+header, .container, .avatar-block, .contact-form, footer {
+  animation: fadeUp 0.7s ease both;
+}
+.container     { animation-delay: 0.12s; }
+.avatar-block  { animation-delay: 0.22s; }
+.contact-form  { animation-delay: 0.3s; }
 
-@media (max-width: 768px) {
-  .container {
-    flex-direction: column;
-  }
-  header nav {
-    position: static; /* на узких экранах навигация встаёт в поток */
-    margin-top: 10px;
-  }
-  a {
-    margin: 0 8px;
-  }
-  .contact-form {
-    max-width: 90%;
-  }
+/* --- Адаптивность --- */
+@media (max-width: 720px) {
+  header h1 { font-size: 2rem; }
+  .container { flex-direction: column; padding: 18px; }
+  .pos-absolute { position: static; margin-top: 10px; max-width: none; }
+  #positioning { overflow: visible; }
 }
